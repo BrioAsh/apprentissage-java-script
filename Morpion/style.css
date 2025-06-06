@@ -73,5 +73,123 @@ h1 {
     font-size: 1.5em;
     font-weight: bold;
     color: #333;
-    min-height: 1.5em;
+    min-height: 1.5em; /* pour éviter un saut de mise en page */
+    text-align: center; /* Centre le texte */
+}
+
+/* Règle pour cacher les éléments */
+.hidden {
+    display: none !important;
+}
+
+#mode-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15; /* Espacement entre les boutons */
+    margin-bottom: 30px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#mode-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#mode-selection h2 {
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+
+#mode-selection button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#mode-selection button:hover {
+    background-color: #0056b3;
+}
+
+/* NOUVEAU : Styles pour la sélection de difficulté */
+#difficulty-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#difficulty-selection h2 {
+    color: #dc3545;
+    margin-bottom: 10px;
+}
+
+#difficulty-selection button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#difficulty-selection button:hover {
+    background-color: #c82333;    
+}
+
+#backToModeSelectionBtn {
+    background-color: #6c757d;
+}
+
+#backToModeSelectionBtn:hover {
+    background-color: #5a6268;
+}
+
+#game-container button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+
+#game-container button:last-child {
+    margin-right: 0;
+}
+
+#game-container button:hover {
+    background-color: #0056b3;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

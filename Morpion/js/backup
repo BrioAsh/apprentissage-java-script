@@ -1,0 +1,287 @@
+// 1. Sélection des éléments du DOM
+const cells = document.querySelectorAll('.cell');
+const resetButton = document.getElementById('resetButton');
+
+const modeSelectionScreen = document.getElementById('mode-selection');
+const gameContainer = document.getElementById('game-container');
+const playerVsPlayerBtn = document.getElementById('playerVsPlayerBtn');
+const playerVsAIBtn = document.getElementById('playerVsAIBtn');
+
+const difficultySelectionScreen = document.getElementById('difficulty-selection');
+const easyAIBtn = document.getElementById('easyAIBtn');
+const mediumAIBtn = document.getElementById('mediumAIBtn');
+const hardAIBtn = document.getElementById('hardAIBtn');
+const backToModeSelectionBtn = document.getElementById('backToModeSelectionBtn');
+
+// Assure-toi d'avoir la div game-status, si elle est dans ton HTML, cette ligne la sélectionne.
+// Si elle est toujours créée dynamiquement, ce n'est pas un problème.
+let messageDisplay = document.getElementById('game-status');
+
+
+// 2. Variables d'état du jeu
+let currentPlayer = 'X';
+let board = ['', '', '', '', '', '', '', '', ''];
+let gameActive = true;
+let gameMode = null; // 'playerVsPlayer' ou 'playerVsAI'
+let aiDifficulty = null; // 'easy', 'medium', 'hard'
+
+const winningConditions = [
+    [0, 1, 2], // Lignes
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6], // Colonnes
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8], // Diagonales
+    [2, 4, 6]
+];
+
+// 3. Fonctions utilitaires d'affichage
+function displayMessage(msg) {
+    // S'assurer que messageDisplay existe avant de tenter d'y accéder
+    if (messageDisplay) {
+        messageDisplay.textContent = msg;
+    }
+}
+
+// 4. Fonctions de gestion des écrans
+function showModeSelection() {
+    modeSelectionScreen.classList.remove('hidden');    // Affiche l'écran de sélection du mode
+    difficultySelectionScreen.classList.add('hidden'); // Cache l'écran de sélection de difficulté
+    gameContainer.classList.add('hidden');             // Cache le conteneur du jeu
+
+    // Réinitialise les variables pour un nouveau départ propre
+    gameMode = null;
+    aiDifficulty = null;
+    displayMessage(""); // Efface tout message précédent
+    handleResetGame(); // S'assure que le plateau est vide si on revient au menu
+}
+
+function startGame() {
+    modeSelectionScreen.classList.add('hidden');       // Cache l'écran de sélection de mode
+    difficultySelectionScreen.classList.add('hidden'); // Cache l'écran de difficulté
+    gameContainer.classList.remove('hidden');          // Affiche le conteneur du jeu
+    handleResetGame();                                 // Réinitialise le jeu (important pour la nouvelle partie)
+    displayMessage(`C'est au tour du joueur ${currentPlayer}`); // Affiche le message initial du tour
+}
+
+
+// 5. Fonctions de l'IA (le coeur de l'IA)
+
+// Fonction principale de L'IA
+function makeAIMove() {
+    // Vérifie si le jeu est actif et si c'est bien le tour de l'IA ('O')
+    if (!gameActive || currentPlayer !== 'O') {
+        return;
+    }
+
+    let move = -1; // L'index de la case que l'IA va jouer
+
+    // Logique de l'IA en fonction de la difficulté
+    if (aiDifficulty === 'easy') {
+        move = getRandomEmptyCell();
+    } else if (aiDifficulty === 'medium') {
+        move = getMediumAIMove();
+    } else if (aiDifficulty === 'hard') {
+        move = getHardAIMove();
+    }
+
+    // Si un coup a été trouvé, simule un clic sur la case
+    if (move !== -1) {
+        // Déclenche un vrai événement de clic sur la case pour que handleCellClick soit appelée
+        // avec tous ses effets (mise à jour du plateau, vérif victoire, changement de joueur)
+        cells[move].click();
+    }
+}
+
+// Logique de l'IA Facile (aléatoire)
+function getRandomEmptyCell() {
+    const emptyCells = [];
+    for (let i = 0; i < board.length; i++) {
+        if (board[i] === '') {
+            emptyCells.push(i);
+        }
+    }
+    if (emptyCells.length > 0) {
+        const randomIndex = Math.floor(Math.random() * emptyCells.length);
+        return emptyCells[randomIndex];
+    }
+    return -1; // Aucune case vide
+}
+
+// Logique de l'IA Moyenne
+function getMediumAIMove() {
+    // 1. Essayer de gagner pour l'IA ('O')
+    let winningMove = findWinningMove('O');
+    if (winningMove !== -1) return winningMove;
+
+    // 2. Essayer de bloquer l'adversaire ('X')
+    let blockingMove = findWinningMove('X');
+    if (blockingMove !== -1) return blockingMove;
+
+    // 3. Sinon, jouer au hasard
+    return getRandomEmptyCell();
+}
+
+// Logique de l'IA Difficile (simplifiée mais plus intelligente)
+function getHardAIMove() {
+    // 1. Essayer de gagner (priorité absolue)
+    let winningMove = findWinningMove('O');
+    if (winningMove !== -1) return winningMove;
+
+    // 2. Essayer de bloquer l'adversaire
+    let blockingMove = findWinningMove('X');
+    if (blockingMove !== -1) return blockingMove;
+
+    // 3. Prendre la case du milieu si elle est libre
+    if (board[4] === '') return 4;
+
+    // 4. Prendre un coin si disponible
+    const corners = [0, 2, 6, 8];
+    for (let i = 0; i < corners.length; i++) {
+        if (board[corners[i]] === '') return corners[i]; // CORRECTION IMPORTANTE ICI
+    }
+
+    // 5. Prendre une case sur les bords si disponible
+    const edges = [1, 3, 5, 7];
+    for (let i = 0; i < edges.length; i++) {
+        if (board[edges[i]] === '') return edges[i];
+    }
+
+    // Dernier recours : jouer au hasard (ne devrait pas arriver si le plateau n'est pas plein)
+    return getRandomEmptyCell();
+}
+
+// Fonction utilitaire pour trouver un coup gagnant/bloquant pour un joueur donné
+function findWinningMove(playerSymbol) {
+    for (let i = 0; i < winningConditions.length; i++) {
+        const [a, b, c] = winningConditions[i];
+        const line = [board[a], board[b], board[c]];
+
+        // Compte le nombre de symboles du joueur et de cases vides dans la ligne
+        const countPlayer = line.filter(s => s === playerSymbol).length;
+        const countEmpty = line.filter(s => s === '').length;
+
+        // Si le joueur a déjà 2 symboles et qu'une case est vide, c'est un coup gagnant/bloquant
+        if (countPlayer === 2 && countEmpty === 1) {
+            if (board[a] === '') return a;
+            if (board[b] === '') return b;
+            if (board[c] === '') return c;
+        }
+    }
+    return -1; // Pas de coup gagnant/bloquant trouvé
+}
+
+
+// 6. Fonctions principales du jeu
+
+function checkWinner() {
+    let roundWon = false;
+    for (let i = 0; i < winningConditions.length; i++) {
+        const winCondition = winningConditions[i];
+        let pos1 = board[winCondition[0]];
+        let pos2 = board[winCondition[1]];
+        let pos3 = board[winCondition[2]];
+
+        if (pos1 === '' || pos2 === '' || pos3 === '') {
+            continue;
+        }
+        if (pos1 === pos2 && pos2 === pos3) {
+            roundWon = true;
+            break;
+        }
+    }
+
+    if (roundWon) {
+        displayMessage(`Le joueur ${currentPlayer} a gagné !`);
+        gameActive = false;
+        return; // Le jeu est fini, on arrête
+    }
+
+    let roundDraw = !board.includes('');
+    if (roundDraw) {
+        displayMessage('Match Nul !');
+        gameActive = false;
+        return; // Le jeu est fini, on arrête
+    }
+
+    // Si le jeu est toujours actif, on passe au joueur suivant et potentiellement à l'IA
+    if (gameActive) {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        displayMessage(`C'est au tour du joueur ${currentPlayer}`);
+
+        // Si c'est au tour de l'IA (O) et que le mode est 'playerVsAI'
+        if (gameMode === 'playerVsAI' && currentPlayer === 'O') {
+            // Un petit délai pour que le coup de l'IA ne soit pas instantané
+            setTimeout(makeAIMove, 700); // L'IA joue après 0.7 seconde
+        }
+    }
+}
+
+function handleCellClick(event) {
+    const clickedCell = event.target;
+    const clickedCellIndex = parseInt(clickedCell.dataset.cellIndex);
+
+    // Empêche de cliquer sur une case déjà jouée, si le jeu n'est pas actif,
+    // ou si c'est le tour de l'IA (pour éviter les interactions indésirables pendant son délai)
+    if (board[clickedCellIndex] !== '' || !gameActive || (gameMode === 'playerVsAI' && currentPlayer === 'O')) {
+        return;
+    }
+
+    board[clickedCellIndex] = currentPlayer;
+    clickedCell.textContent = currentPlayer;
+    clickedCell.classList.add(currentPlayer.toLowerCase());
+
+    checkWinner(); // Vérifie si le coup a entraîné une victoire ou un match nul
+}
+
+function handleResetGame() {
+    currentPlayer = 'X';
+    board = ['', '', '', '', '', '', '', '', ''];
+    gameActive = true;
+    displayMessage(`C'est au tour du joueur ${currentPlayer}`);
+
+    cells.forEach(cell => {
+        cell.textContent = '';
+        cell.classList.remove('x', 'o');
+    });
+}
+
+// 7. Écouteurs d'événements (Event Listeners)
+
+cells.forEach(cell => {
+    cell.addEventListener('click', handleCellClick);
+});
+
+resetButton.addEventListener('click', handleResetGame);
+
+playerVsPlayerBtn.addEventListener('click', () => {
+    gameMode = 'playerVsPlayer';
+    startGame();
+});
+
+playerVsAIBtn.addEventListener('click', () => {
+    gameMode = 'playerVsAI'; // Définir le mode AVANT d'aller à la sélection de difficulté
+    modeSelectionScreen.classList.add('hidden');
+    difficultySelectionScreen.classList.remove('hidden'); // Affiche le menu de difficulté
+});
+
+easyAIBtn.addEventListener('click', () => {
+    aiDifficulty = 'easy';
+    startGame();
+});
+
+mediumAIBtn.addEventListener('click', () => {
+    aiDifficulty = 'medium';
+    startGame();
+});
+
+hardAIBtn.addEventListener('click', () => {
+    aiDifficulty = 'hard';
+    startGame();
+});
+
+backToModeSelectionBtn.addEventListener('click', showModeSelection); // Retour au menu principal
+
+// Initialisation au chargement de la page : affiche l'écran de sélection de mode
+showModeSelection();

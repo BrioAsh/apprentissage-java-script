@@ -9,20 +9,37 @@
 <body>
     <h1>Morpion</h1>
 
-    <div id="game-board">
-        <div class="cell" data-cell-index="0"></div>
-        <div class="cell" data-cell-index="1"></div>
-        <div class="cell" data-cell-index="2"></div>
-        <div class="cell" data-cell-index="3"></div>
-        <div class="cell" data-cell-index="4"></div>
-        <div class="cell" data-cell-index="5"></div>
-        <div class="cell" data-cell-index="6"></div>
-        <div class="cell" data-cell-index="7"></div>
-        <div class="cell" data-cell-index="8"></div>
+    <div id="mode-selection">
+        <h2>Choisissez votre mode de jeu :</h2>
+        <button id="playerVsPlayerBtn">Joueur vs Joueur</button>
+        <button id="playerVsAIBtn">Joueur vs IA</button>
     </div>
 
-    <button id="resetButton">Rejouer</button>
+    <div id="difficulty-selection" class="hidden">
+        <h2>Choisissez la difficulté de l'IA :</h2>
+        <button id="easyAIBtn">Facile</button>
+        <button id="mediumAIBtn">Moyen</button>
+        <button id="hardAIBtn">Difficile</button>
+        <button id="backToModeSelectionBtn">Retour</button>
+    </div>
 
-    <script src="script.js"></script> 
+    <div id="game-container" class="hidden"> 
+        <div id="game-status"> </div> 
+        <div id="game-board">
+            <div class="cell" data-cell-index="0"></div>
+            <div class="cell" data-cell-index="1"></div>
+            <div class="cell" data-cell-index="2"></div>
+            <div class="cell" data-cell-index="3"></div>
+            <div class="cell" data-cell-index="4"></div>
+            <div class="cell" data-cell-index="5"></div>
+            <div class="cell" data-cell-index="6"></div>
+            <div class="cell" data-cell-index="7"></div>
+            <div class="cell" data-cell-index="8"></div>
+        </div>
+        <button id="resetButton">Rejouer</button>
+        <button id="backToMainMenuBtn">Retour au menu</button>
+    </div>
+
+    <script type="module" src="js/main.js"></script> 
 </body>
 </html>
