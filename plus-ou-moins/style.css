@@ -1,0 +1,237 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #e0f2f7; /* Bleu très clair */
+    color: #333;
+    line-height: 1.6;
+}
+
+.game-container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    box-sizing: border-box; /* Inclure le padding dans la largeur */
+}
+
+h1 {
+    color: #007bff; /* Bleu vif */
+    margin-bottom: 20px;
+    font-size: 2.2em;
+}
+
+p {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.guess-section {
+    margin: 25px 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="number"] {
+    padding: 12px;
+    width: calc(100% - 140px); /* Ajuste la largeur par rapport au bouton */
+    max-width: 200px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1em;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus {
+    border-color: #007bff;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    background-color: #28a745; /* Vert pour "Deviner" */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 10px; /* Espace entre input et button */
+}
+
+button:hover {
+    background-color: #218838; /* Vert plus foncé au survol */
+}
+
+#newGameBtn {
+    background-color: #6c757d; /* Gris pour "Nouvelle partie" */
+    margin-top: 20px;
+}
+
+#newGameBtn:hover {
+    background-color: #5a6268;
+}
+
+/* Styles pour les messages */
+.message {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    min-height: 1.2em; /* Pour éviter le saut de mise en page */
+}
+
+.message.correct {
+    color: #28a745; /* Vert pour succès */
+}
+
+.message.incorrect {
+    color: #dc3545; /* Rouge pour erreur */
+}
+
+.message.info {
+    color: #007bff; /* Bleu pour information */
+}
+
+.attempts {
+    font-size: 1em;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* Classe utilitaire pour cacher les éléments */
+.hidden {
+    display: none !important;
+}
+
+.screen {
+    /* Styles communs à tes écrans (centrage, padding, etc.) */
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    box-sizing: border-box;
+}
+
+/* Styles pour le leaderboard */
+#leaderboard-section h2 {
+    color: #007bff;
+    margin-bottom: 25px;
+    font-size: 2em;
+}
+
+#highScoresList {
+    list-style: none; /* Supprime les puces de la liste */
+    padding: 0;
+    margin: 0 0 30px 0;
+    max-height: 300px; /* Limite la hauteur de la liste */
+    overflow-y: auto; /* Ajoute un scroll si la liste est trop longue */
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #f8f9fa; /* Fond légèrement grisé pour la liste */
+}
+
+#highScoresList li {
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1em;
+    color: #444;
+}
+
+#highScoresList li:last-child {
+    border-bottom: none; /* Pas de bordure pour le dernier élément */
+}
+
+#highScoresList li:nth-child(odd) {
+    background-color: #f0f0f0; /* Couleur de fond alternée */
+}
+
+#highScoresList li strong {
+    color: #007bff; /* Met en évidence le nom */
+}
+
+#highScoresList li span {
+    font-weight: bold;
+    color: #28a745; /* Met en évidence le score */
+}
+
+/* Styles pour la section de saisie du nom */
+#playerNameInputSection h2 {
+    color: #28a745; /* Vert pour félicitations */
+    margin-bottom: 15px;
+}
+
+#playerNameInputSection p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+#playerNameInputSection label {
+    margin-bottom: 15px;
+}
+
+#playerNameInputSection input[type="text"] {
+    padding: 12px;
+    width: calc(100% - 24px); /* Pour compenser le padding */
+    max-width: 250px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    font-size: 1.1em;
+    text-align: center;
+    margin-bottom: 20px;
+    outline: none;
+}
+
+#playerNameInputSection input[type="text"]:focus {
+    border-color: #0056b3;
+}
+
+#saveScoreBtn {
+    background-color: #007bff; /* Bleu pour "Enregistrer" */
+}
+
+#saveScoreBtn:hover {
+    background-color: #0056b3;
+}
+
+/* Style pour le bouton flottant (voir classement) */
+.floating-btn {
+    position: fixed; /* Reste en place même en scrollant */
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    font-size: 1em;
+    background-color: #6c757d; /* Gris foncé */
+    color: white;
+    border: none;
+    border-radius: 50px; /* Forme de pilule */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    z-index: 1000; /* Assure qu'il est au-dessus des autres éléments */
+}
+
+.floating-btn:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px); /* Petit effet de survol */
+}

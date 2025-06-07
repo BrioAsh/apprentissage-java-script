@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu du Plus ou Moins</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="player-setup-section" class="screen">
+        <h2>Bienvenue !</h2>
+        <p>Pour commencer, veuillez entrer votre pseudo :</p>
+        <input type="text" id="initialPlayerNameInput" maxlength="10" placeholder="Votre pseudo (max 10 caractères)">
+        <p id="playerSetupMessage" class="message"></p>
+        <button id="startGameFromSetupBtn">Commencer le jeu</button>
+        <button id="showLeaderboardFromSetupBtn">Voir le Classement</button>
+    </div>
+
+    <div id="main-game-section" class="screen hidden">
+        <h1>Jeu du Plus ou Moins</h1>
+        <p>Je pense à un nombre entre <span id="minNumber">1</span> et <span id="maxNumber">100</span>. Essaie de le deviner !</p>
+
+        <div class="guess-section">
+            <label for="guessInput">Votre proposition :</label>
+            <input type="number" id="guessInput" min="1" max="100">
+            <button id="submitGuessBtn">Deviner</button>
+        </div>
+
+        <p id="message" class="message"></p>
+        <p id="attempts" class="attempts"></p>
+
+        <button id="newGameBtn" class="hidden">Nouvelle partie</button>
+    </div>
+
+    <div id="leaderboard-section" class="screen hidden">
+        <h2>Meilleurs Scores</h2>
+        <ul id="highScoresList">
+            <li>Chargement des scores...</li>
+        </ul>
+        <button id="closeLeaderboardBtn">Fermer</button>
+    </div>
+
+    <button id="showLeaderboardBtn" class="floating-btn hidden"></button>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
