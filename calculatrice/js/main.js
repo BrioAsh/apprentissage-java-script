@@ -1,0 +1,1 @@
+const InputCalculatorDisplay = document.querySelector('calculator-display');

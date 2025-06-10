@@ -1,0 +1,24 @@
+Projet de Site Web : Guide Communautaire Elden Ring
+
+Fonctionnalités principales :
+
+    Accueil : 
+        Présentation du guide, articles récents ou mis en avant.
+    
+    Catégories de guides :
+        Boss (stratégies, faiblesses).
+        Armes (emplacements, statistiques, améliorations).
+        Armures (emplacements, sets).
+        Sorts/Incantations.
+        Builds de personnages (ex : "Mage pur", "Guerrier Force", "Saigment", etc.).
+        Zones (points d'intérêt, objets importants).
+
+    Page détaillée pour chaque élément :
+        Par exemple, pour un boss : image, description, stratégie, récompenses.
+        Pour une arme : image, statistiques, où la trouver, comment l'améliorer.
+
+    Fonctionnalité de recherche (optionnel au début, mais très utile) :
+        Permettre aux utilisateurs de trouver rapidement des informations.
+    
+    Formulaire de contact ou d'envoi d'astuces (optionnel) :
+        Pour simuler une interaction communautaire, même si tu es le seul à alimenter le contenu au début.
