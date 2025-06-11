@@ -1,0 +1,235 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Le style du Body*/
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; /* police d'écriture */
+    background-color: hsl(240, 10%, 15%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: hsl(0, 0%, 90%);
+}
+/* Le style du Auth-Container*/
+#auth-container {
+    background-color: hsl(240, 10%, 20%);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+/* Le style du titre h1*/
+h1 {
+    margin-bottom: 30px;
+    color: hsl(0, 0%, 95%);
+    font-size: 2em;
+}
+/* Le style des groupes de formulaire */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+/* Le style des labels */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: hsl(0, 0%, 85%);
+}
+/* Le style des inputs text et password */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: hsl(240, 10%, 25%);
+    color: hsl(0, 0%, 95%);
+    font-size: 1em;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+input[type="text"]::placeholder {
+    color: hsl(0, 0%, 60%);
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+    outline: none;
+    background-color: hsl(240, 10%, 30%);
+    box-shadow: 0 0 0 3px hsl(200, 70%, 55%);
+}
+
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    background-color: hsl(200, 70%, 55%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin-top: 10px;
+}
+
+.submit-button:hover {
+    background-color: hsl(200, 70%, 65%);
+    transform: translateY(-1px);
+}
+
+.submit-button:active {
+    transform: translateY(0);
+    background-color: hsl(200, 70%, 50%);
+}
+
+.toggle-form-message {
+    margin-top: 25px;
+    font-size: 0.9em;
+    color: hsl(0, 0%, 70%);
+}
+
+#toggle-signup {
+    background: none;
+    border: none;
+    color: hsl(200, 70%, 55%);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 0;
+    margin-left: 5px;
+    transition: color 0.3s ease;
+}
+
+#toggle-signup:hover {
+    color: hsl(200, 70%, 65%);
+}
+
+#auth-container {
+    perspective: 1000px; 
+    position: relative; 
+    background-color: hsl(240, 10%, 20%);
+    padding: 0px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    /* text-align: center;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+    min-height: 600px;
+    overflow: hidden;
+    transition: height 0.5s ease-in-out;
+}
+
+.form-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Prend la hauteur de son parent (#auth-container) */
+    text-align: center;
+    transition: transform 0.8s; /* Durée et type de l'animation de retournement */
+    transform-style: preserve-3d; /* Permet aux enfants d'être positionnés en 3D */
+}
+
+/* État initial pour la classe qui déclenchera le retournement */
+#auth-container.is-flipped .form-card-inner {
+    transform: rotateY(180deg);
+}
+
+.form-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Cache la "face arrière" quand elle n'est pas tournée vers l'observateur */
+    /* Assurez-vous que les faces ont le même fond que le conteneur pour un effet sans couture */
+    background-color: hsl(240, 10%, 20%); 
+    padding: 40px; /* Mêmes padding que le conteneur pour qu'ils s'alignent */
+    border-radius: 15px; /* Mêmes arrondis */
+    display: flex; /* Utilise flexbox pour aligner le contenu des faces */
+    flex-direction: column;
+    justify-content: space-between; /* Pour pousser le message de bascule en bas */
+    transition: opacity 0.3s ease;
+}
+
+.form-face-front {
+    transform: rotateY(0deg); /* La face avant est visible par défaut */
+    z-index: 2;
+}
+
+.form-face-back {
+    transform: rotateY(180deg); /* La face arrière est tournée par défaut */
+    z-index: 1;
+}
+
+#auth-container.is-flipped .form-face-front {
+    opacity: 0; 
+}
+
+#auth-container.is-flipped .form-face-back {
+    opacity: 1;
+}
+
+
+.toggle-form-message {
+    margin-top: auto;
+    font-size: 0.9em;
+    color: hsl(0, 0%, 70%);
+}
+
+#toggle-signup, #toggle-login {
+    background: none;
+    border: none;
+    color: hsl(200, 70%, 55%);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 0;
+    margin-left: 5px;
+    transition: color 0.3s ease;
+}
+
+#toggle-signup:hover, #toggle-login:hover {
+    color: hsl(200, 70%, 65%);
+}
+
+.form-face h1 {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.form-face form {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+}
+
+.error-message {
+    color: hsl(0, 80%, 60%);
+    font-size: 0.85em;
+    margin-top: 5px;
+    text-align: left;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.error-message:not(:empty) {
+    opacity: 1;
+}
+
+input.invalid {
+    border: 1px solid hsl(0, 80%, 60%) !important;
+    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.3) !important;
+}

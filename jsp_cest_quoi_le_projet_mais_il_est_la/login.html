@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de connexion</title>
+    <link rel="stylesheet" href="css/login-style.css">
+</head>
+<body>
+    <div id="auth-container">
+        <div class="form-card-inner"> 
+            
+            <div class="form-face form-face-front">
+                <h1>Connexion</h1>
+                <form id="login-form"> 
+                    <div class="form-group">
+                        <label for="login-email">Email :</label>
+                        <input type="email" id="login-email" name="email" placeholder="Votre email" required> 
+                        <div class="error-message" id="login-email-error"></div>
+                    </div>
+                    <div class="form-group"> 
+                        <label for="login-password">Mot de passe :</label>
+                        <input type="password" id="login-password" name="password" placeholder="Votre mot de passe" required> 
+                        <div class="error-message" id="login-password-error"></div>
+                    </div>
+                    <button type="submit" class="submit-button">Se connecter</button>
+                    <p class="toggle-form-message">Pas encore de compte ? <button type="button" id="toggle-signup">Créer un compte</button></p>
+                </form>
+            </div>
+
+            <div class="form-face form-face-back">
+                <h1>Créer un compte</h1>
+                <form id="signup-form"> 
+                    <div class="form-group">
+                        <label for="signup-email">Email :</label>
+                        <input type="email" id="signup-email" name="email" placeholder="Votre email" required> 
+                        <div class="error-message" id="signup-email-error"></div>
+                    </div>
+                    <div class="form-group"> 
+                        <label for="signup-username">Nom d'utilisateur :</label>
+                        <input type="text" id="signup-username" name="username" placeholder="Votre pseudonyme" required> 
+                        <div class="error-message" id="signup-username-error"></div>
+                    </div>
+                    <div class="form-group"> 
+                        <label for="signup-password">Mot de passe :</label>
+                        <input type="password" id="signup-password" name="password" placeholder="Votre mot de passe" required> 
+                        <div class="error-message" id="signup-password-error"></div>
+                    </div>
+                     <div class="form-group"> 
+                        <label for="signup-confirm-password">Confirmer mot de passe :</label>
+                        <input type="password" id="signup-confirm-password" name="confirm-password" placeholder="Confirmer votre mot de passe" required> 
+                        <div class="error-message" id="signup-confirm-password-error"></div>
+                    </div>
+                    <button type="submit" class="submit-button">S'inscrire</button>
+                    <p class="toggle-form-message">Déjà un compte ? <button type="button" id="toggle-login">Se connecter</button></p>
+                </form>
+            </div>
+
+        </div> </div>
+    <script src="js/login.js"></script>
+</body>
+</html>
