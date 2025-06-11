@@ -136,6 +136,7 @@ toggleSignupButton.addEventListener('click', (event) => {
     event.preventDefault();
     authContainer.classList.add('is-flipped');
     isLoginMode = false;
+    formCardInner.addEventListener('transitionend', adjustContainerHeight, { once: true });
     setTimeout(adjustContainerHeight, 500); 
     // Optionnel: masquer les erreurs du formulaire de connexion lors du switch
     hideError(document.getElementById('login-email'));
@@ -146,6 +147,7 @@ toggleLoginButton.addEventListener('click', (event) => {
     event.preventDefault();
     authContainer.classList.remove('is-flipped');
     isLoginMode = true;
+    formCardInner.addEventListener('transitionend', adjustContainerHeight, { once: true});
     setTimeout(adjustContainerHeight, 500); 
     // Optionnel: masquer les erreurs du formulaire d'inscription lors du switch
     hideError(document.getElementById('signup-email'));
